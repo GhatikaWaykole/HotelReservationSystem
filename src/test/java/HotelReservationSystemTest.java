@@ -10,16 +10,16 @@ public class HotelReservationSystemTest {
     //Test method to check if hotel added properly
     @Before
     public void CheckIfHotelAddedProperly() {
-            hotelReservation.addHotel("BridegWood", 160,60);
-            hotelReservation.addHotel("RidgeWood", 160,40);
-            hotelReservation.addHotel("LakeWood", 120,80);
+            hotelReservation.addHotel("BridegWood", 180,60);
+            hotelReservation.addHotel("RidgeWood", 220,20);
+            hotelReservation.addHotel("LakeWood", 300,110);
             int hotelCount = hotelReservation.hotelCount();
             Assert.assertEquals(3, hotelCount);
     }
     //Test to check the cheapHotel data
     @Test
     public void givenDataHotel_WhenCheapPrice_ShouldReturnTrue(){
-        String cheapHotel = hotelReservation.cheapHotelName("12Sep2020","15Sep2020");
-        Assert.assertEquals("LakeWood",cheapHotel);
+        String cheapHotel = hotelReservation.cheapHotelName("11Sep2020","12Sep2020");
+        Assert.assertEquals("BridegWood,RidgeWood",cheapHotel);
     }
 }

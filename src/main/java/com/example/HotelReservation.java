@@ -2,6 +2,7 @@ package com.example;
 
 import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /* purpose Hostel Reservation System to do the operation of different hotel
  *
@@ -28,6 +31,15 @@ public class HotelReservation {
     public int hotelCount(){
        return hotelreservation.size();
     }
+    public boolean checkWeekend(DayOfWeek day){
+        switch (day){
+            case SATURDAY:
+               return true;
+            case SUNDAY:
+                return true;
+        }
+        return false;
+    }
     /* method to find the cheaphotel
      * @param lowerRange , upperRange
      * @return cheapHotel data
@@ -41,11 +53,16 @@ public class HotelReservation {
         LocalDate lower = LocalDate.parse(lowerRange, format);
         LocalDate upper = LocalDate.parse(upperRange, format);
         int numDays = Period.between(lower, upper).getDays();
-
+        List<LocalDate> list = Stream.iterate(lower, local -> local.plusDays(1)).limit(numDays).collect(Collectors.toList());
         for(Hotel hotel: hotelreservation) {
             int totalRate = 0;
-            for(int i=0;i<numDays;i++) {
-                totalRate += hotel.getWeekDayRate();
+            for (LocalDate localDate : list){
+                if(checkWeekend(localDate.getDayOfWeek())){
+                    totalRate += hotel.getWeekendDayRate();
+                }
+                else{
+                    totalRate += hotel.getWeekDayRate();
+                }
             }
             hotelRateMap.put(hotel.getHotelName(),totalRate);
         }
@@ -53,6 +70,9 @@ public class HotelReservation {
             if(min > (int)map.getValue()) {
                 min = (int)map.getValue();
                 cheapHotel = (String)map.getKey();
+            }
+            else if(min == (int)map.getValue()){
+                cheapHotel = cheapHotel+","+map.getKey();
             }
         }
         return cheapHotel;
