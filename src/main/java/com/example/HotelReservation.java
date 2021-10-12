@@ -45,10 +45,11 @@ public class HotelReservation {
      * @return cheapHotel data
      */
     public String cheapHotelName(String lowerRange,String upperRange){
-        HashMap<String,Integer> hotelRateMap = new HashMap<>();
+        HashMap<Hotel,Integer> hotelRateMap = new HashMap<>();
         int min = Integer.MAX_VALUE;
-        String cheapHotel = null;
-
+        Hotel cheapHotel = null;
+        String cheapHotelName = null;
+        int maxRating =0;
         DateTimeFormatter format = DateTimeFormatter.ofPattern("ddMMMyyyy");
         LocalDate lower = LocalDate.parse(lowerRange, format);
         LocalDate upper = LocalDate.parse(upperRange, format);
@@ -64,17 +65,23 @@ public class HotelReservation {
                     totalRate += hotel.getWeekDayRate();
                 }
             }
-            hotelRateMap.put(hotel.getHotelName(),totalRate);
+            hotelRateMap.put(hotel,totalRate);
         }
         for (Map.Entry map : hotelRateMap.entrySet()) {
-            if(min > (int)map.getValue()) {
-                min = (int)map.getValue();
-                cheapHotel = (String)map.getKey();
-            }
-            else if(min == (int)map.getValue()){
-                cheapHotel = cheapHotel+","+map.getKey();
+            if (min > (int) map.getValue()) {
+                min = (int) map.getValue();
+                cheapHotel = (Hotel) map.getKey();
+                maxRating = cheapHotel.getRating();
+                cheapHotelName = cheapHotel.getHotelName();
+            } else if (min == (int) map.getValue()) {
+                cheapHotel = (Hotel) map.getKey();
+                if (maxRating < cheapHotel.getRating()) {
+                    maxRating = cheapHotel.getRating();
+                    min = (int) map.getValue();
+                    cheapHotelName = cheapHotel.getHotelName();
+                }
             }
         }
-        return cheapHotel;
+        return cheapHotelName;
     }
 }
