@@ -19,8 +19,8 @@ public class HotelReservation {
      * @param hostname, weekDay
      * @return
      */
-    public void addHotel(String hotelName,int weekDayRate){
-        hotelreservation.add(new Hotel(hotelName, weekDayRate));
+    public void addHotel(String hotelName,int weekDayRate,int weekendDayRate){
+        hotelreservation.add(new Hotel(hotelName, weekDayRate,weekendDayRate));
     }
     /* method to count the add the hotel in the arraylist data
      * @param hotelreservation check data

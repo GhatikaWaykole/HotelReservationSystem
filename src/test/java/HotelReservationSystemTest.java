@@ -10,9 +10,9 @@ public class HotelReservationSystemTest {
     //Test method to check if hotel added properly
     @Before
     public void CheckIfHotelAddedProperly() {
-            hotelReservation.addHotel("BridegWood", 160);
-            hotelReservation.addHotel("RidgeWood", 160);
-            hotelReservation.addHotel("LakeWood", 120);
+            hotelReservation.addHotel("BridegWood", 160,60);
+            hotelReservation.addHotel("RidgeWood", 160,40);
+            hotelReservation.addHotel("LakeWood", 120,80);
             int hotelCount = hotelReservation.hotelCount();
             Assert.assertEquals(3, hotelCount);
     }

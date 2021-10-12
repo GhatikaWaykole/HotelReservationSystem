@@ -3,10 +3,12 @@ package com.example;
 public class Hotel {
     private String hotelName;
     private int weekDayRate;
+    private int weekendDayRate;
 
-    public Hotel(String hotelName, int weekDayRate) {
+    public Hotel(String hotelName, int weekDayRate,int weekendDayRate) {
         this.hotelName = hotelName;
         this.weekDayRate = weekDayRate;
+        this.weekendDayRate = weekendDayRate;
     }
 
     public String getHotelName() {
